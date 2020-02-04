@@ -1,25 +1,22 @@
 package com.github.zuihou.authority.entity.core;
 
-import java.time.LocalDateTime;
-
-import javax.validation.constraints.NotEmpty;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.zuihou.base.entity.Entity;
-
+import com.github.zuihou.injection.annonation.InjectionField;
+import com.github.zuihou.model.RemoteData;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+
 import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
+import static com.github.zuihou.common.constant.InjectionFieldConstants.ORG_ID_CLASS;
+import static com.github.zuihou.common.constant.InjectionFieldConstants.ORG_ID_METHOD;
 
 /**
  * <p>
@@ -57,7 +54,8 @@ public class Station extends Entity<Long> {
      */
     @ApiModelProperty(value = "组织ID")
     @TableField("org_id")
-    private Long orgId;
+    @InjectionField(api = ORG_ID_CLASS, method = ORG_ID_METHOD)
+    private RemoteData<Long, com.github.zuihou.authority.entity.core.Org> org;
 
 
     /**
@@ -78,14 +76,14 @@ public class Station extends Entity<Long> {
 
     @Builder
     public Station(Long id, LocalDateTime createTime, Long createUser, LocalDateTime updateTime, Long updateUser,
-                   String name, Long orgId, Boolean status, String describe) {
+                   String name, RemoteData<Long, Org> orgId, Boolean status, String describe) {
         this.id = id;
         this.createTime = createTime;
         this.createUser = createUser;
         this.updateTime = updateTime;
         this.updateUser = updateUser;
         this.name = name;
-        this.orgId = orgId;
+        this.org = orgId;
         this.status = status;
         this.describe = describe;
     }

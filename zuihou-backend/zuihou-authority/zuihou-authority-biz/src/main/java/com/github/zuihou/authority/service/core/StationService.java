@@ -1,10 +1,13 @@
 package com.github.zuihou.authority.service.core;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.zuihou.authority.dto.core.StationPageDTO;
 import com.github.zuihou.authority.entity.core.Station;
+
+import java.io.Serializable;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -23,5 +26,13 @@ public interface StationService extends IService<Station> {
      * @param data
      * @return
      */
-    IPage<Station> findStationPage(Page page, StationPageDTO data);
+    IPage<Station> findStationPage(IPage page, StationPageDTO data);
+
+    /**
+     * 根据id 查询
+     *
+     * @param ids
+     * @return
+     */
+    Map<Serializable, Object> findStationByIds(Set<Serializable> ids);
 }

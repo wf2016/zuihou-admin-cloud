@@ -1,9 +1,7 @@
 package com.github.zuihou.authority.controller.core;
 
-import java.util.List;
-
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.zuihou.authority.dto.core.StationPageDTO;
 import com.github.zuihou.authority.dto.core.StationSaveDTO;
 import com.github.zuihou.authority.dto.core.StationUpdateDTO;
@@ -12,9 +10,7 @@ import com.github.zuihou.authority.service.core.StationService;
 import com.github.zuihou.base.BaseController;
 import com.github.zuihou.base.R;
 import com.github.zuihou.base.entity.SuperEntity;
-import com.github.zuihou.dozer.DozerUtils;
 import com.github.zuihou.log.annotation.SysLog;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,15 +18,12 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -49,8 +42,7 @@ public class StationController extends BaseController {
 
     @Autowired
     private StationService stationService;
-    @Autowired
-    private DozerUtils dozer;
+
 
     /**
      * 分页查询岗位
@@ -66,8 +58,7 @@ public class StationController extends BaseController {
     @GetMapping("/page")
     @SysLog("分页查询岗位")
     public R<IPage<Station>> page(StationPageDTO data) {
-
-        Page<Station> page = getPage();
+        IPage<Station> page = getPage();
         stationService.findStationPage(page, data);
         return success(page);
     }
@@ -95,7 +86,7 @@ public class StationController extends BaseController {
     @PostMapping
     @SysLog("新增岗位")
     public R<Station> save(@RequestBody @Validated StationSaveDTO data) {
-        Station station = dozer.map(data, Station.class);
+        Station station = BeanUtil.toBean(data, Station.class);
         stationService.save(station);
         return success(station);
     }
@@ -110,7 +101,7 @@ public class StationController extends BaseController {
     @PutMapping
     @SysLog("修改岗位")
     public R<Station> update(@RequestBody @Validated(SuperEntity.Update.class) StationUpdateDTO data) {
-        Station station = dozer.map(data, Station.class);
+        Station station = BeanUtil.toBean(data, Station.class);
         stationService.updateById(station);
         return success(station);
     }
@@ -127,6 +118,11 @@ public class StationController extends BaseController {
     public R<Boolean> delete(@RequestParam("ids[]") List<Long> ids) {
         stationService.removeByIds(ids);
         return success();
+    }
+
+    @GetMapping("/findStationByIds")
+    public Map<Serializable, Object> findStationByIds(@RequestParam("ids") Set<Serializable> ids) {
+        return stationService.findStationByIds(ids);
     }
 
 }

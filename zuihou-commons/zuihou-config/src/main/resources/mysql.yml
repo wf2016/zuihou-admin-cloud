@@ -12,6 +12,8 @@ zuihou:
   database:
     isMultiTenant: true   # 是否启用多租户
     isBlockAttack: false  # 是否启用 攻击 SQL 阻断解析器
+    worker-id: 0
+    data-center-id: 0
 
 # mysql 通用配置
 spring:
@@ -61,6 +63,7 @@ mybatis-plus:
     - classpath*:mapper_**/**/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.github.zuihou.*.entity;com.github.zuihou.database.mybatis.typehandler
+  typeEnumsPackage: com.github.zuihou.*.enumeration
   global-config:
     db-config:
       id-type: INPUT

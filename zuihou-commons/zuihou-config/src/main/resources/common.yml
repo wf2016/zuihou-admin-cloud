@@ -12,6 +12,17 @@ zuihou:
         parameterType: header
         required: true
         defaultValue: "0000"
+  injection:
+    # 是否启用 远程数据 手动注入
+    enabled: true
+    # 是否启用 远程数据 注解注入
+    aop-enabled: true
+    guavaCache:
+      enabled: true
+      maximumSize: 1000
+      refreshWriteTime: 10
+      refreshThreadPoolSize: 1000
+
 
 server:
   undertow: # jetty  undertow
@@ -55,8 +66,8 @@ spring:
 
 dozer:
   mappingFiles:
-    - classpath:dozer/global.dozer.xml
-    - classpath:dozer/biz.dozer.xml
+    - classpath*:dozer/*.dozer.xml
+
 management:
   endpoints:
     web:
@@ -120,6 +131,3 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 1200000
-
-id-generator:
-  machine-code: 1  # id生成器机器掩码

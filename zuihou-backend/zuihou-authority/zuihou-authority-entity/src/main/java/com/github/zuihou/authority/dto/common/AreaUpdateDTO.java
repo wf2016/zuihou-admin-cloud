@@ -1,10 +1,8 @@
 package com.github.zuihou.authority.dto.common;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.github.zuihou.base.entity.SuperEntity;
-import com.github.zuihou.common.constant.RemoteDataConstants;
+import com.github.zuihou.injection.annonation.InjectionField;
 import com.github.zuihou.model.RemoteData;
-import com.github.zuihou.remotedata.annonation.RemoteField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -15,7 +13,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
+import static com.github.zuihou.common.constant.InjectionFieldConstants.DICTIONARY_ITEM_CLASS;
+import static com.github.zuihou.common.constant.InjectionFieldConstants.DICTIONARY_ITEM_METHOD;
 
 /**
  * <p>
@@ -24,7 +23,7 @@ import static com.baomidou.mybatisplus.annotation.SqlCondition.LIKE;
  * </p>
  *
  * @author zuihou
- * @since 2020-01-03
+ * @since 2020-02-02
  */
 @Data
 @NoArgsConstructor
@@ -43,13 +42,6 @@ public class AreaUpdateDTO implements Serializable {
     private Long id;
 
     /**
-     * 名称
-     */
-    @ApiModelProperty(value = "名称")
-    @NotEmpty(message = "名称不能为空")
-    @Length(max = 255, message = "名称长度不能超过255")
-    private String label;
-    /**
      * 编码
      */
     @ApiModelProperty(value = "编码")
@@ -63,11 +55,6 @@ public class AreaUpdateDTO implements Serializable {
     @Length(max = 255, message = "全名长度不能超过255")
     private String fullName;
     /**
-     * 排序
-     */
-    @ApiModelProperty(value = "排序")
-    private Integer sortValue;
-    /**
      * 经度
      */
     @ApiModelProperty(value = "经度")
@@ -79,31 +66,30 @@ public class AreaUpdateDTO implements Serializable {
     @ApiModelProperty(value = "维度")
     @Length(max = 255, message = "维度长度不能超过255")
     private String latitude;
-
-    @ApiModelProperty(value = "数据来源")
-    @Length(max = 255, message = "数据来源长度不能超过255")
-    @TableField(value = "source_", condition = LIKE)
-    private String source;
-
     /**
      * 行政区级
+     * @InjectionField(api = DICTIONARY_ITEM_CLASS, method = DICTIONARY_ITEM_METHOD) RemoteData<String, String>
+     *
+     *
      */
     @ApiModelProperty(value = "行政区级")
-    @NotNull(message = "行政区级不能为空")
-    @TableField("level")
-    @RemoteField(api = RemoteDataConstants.DICTIONARY_ITEM_CLASS, method = RemoteDataConstants.DICTIONARY_ITEM_METHOD)
+    @Length(max = 10, message = "行政区级长度不能超过10")
+    @InjectionField(api = DICTIONARY_ITEM_CLASS, method = DICTIONARY_ITEM_METHOD)
     private RemoteData<String, String> level;
+    /**
+     * 数据来源
+     */
+    @ApiModelProperty(value = "数据来源")
+    @Length(max = 255, message = "数据来源长度不能超过255")
+    private String source;
+    @ApiModelProperty(value = "名称")
+    @NotEmpty(message = "名称不能为空")
+    @Length(max = 255, message = "名称长度不能超过255")
+    protected String label;
 
-    /**
-     * 父CODE
-     */
-    @ApiModelProperty(value = "父CODE")
-    @Length(max = 64, message = "父CODE长度不能超过64")
-    private String parentCode;
-    /**
-     * 父ID
-     */
     @ApiModelProperty(value = "父ID")
-    private Long parentId;
+    protected Long parentId;
 
+    @ApiModelProperty(value = "排序号")
+    protected Integer sortValue;
 }
