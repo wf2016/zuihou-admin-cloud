@@ -15,7 +15,8 @@ import java.util.Set;
  * @author zuihou
  * @date 2019/08/02
  */
-@FeignClient(name = "${zuihou.feign.authority-server:zuihou-authority-server}", path = "/station", fallback = StationApiFallback.class)
+@FeignClient(name = "${zuihou.feign.authority-server:zuihou-authority-server}", path = "/station",
+        qualifier = "stationApi", fallback = StationApiFallback.class)
 public interface StationApi {
 
     /**
@@ -26,4 +27,13 @@ public interface StationApi {
      */
     @GetMapping("/findStationByIds")
     Map<Serializable, Object> findStationByIds(@RequestParam(value = "ids") Set<Serializable> ids);
+
+    /**
+     * 根据id查询 岗位名称
+     *
+     * @param ids
+     * @return
+     */
+    @GetMapping("/findStationNameByIds")
+    Map<Serializable, Object> findStationNameByIds(@RequestParam(value = "ids") Set<Serializable> ids);
 }

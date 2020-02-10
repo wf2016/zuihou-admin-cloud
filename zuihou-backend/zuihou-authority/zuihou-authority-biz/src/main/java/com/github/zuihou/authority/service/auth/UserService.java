@@ -133,5 +133,13 @@ public interface UserService extends IService<User> {
      * @param ids
      * @return
      */
-    Map<Serializable, Object> findUser(Set<Serializable> ids);
+    Map<Serializable, Object> findUserByIds(Set<Serializable> ids);
+
+    /**
+     * 根据 id 查询用户名称
+     *
+     * @param ids
+     * @return
+     */
+    Map<Serializable, Object> findUserNameByIds(Set<Serializable> ids);
 }
