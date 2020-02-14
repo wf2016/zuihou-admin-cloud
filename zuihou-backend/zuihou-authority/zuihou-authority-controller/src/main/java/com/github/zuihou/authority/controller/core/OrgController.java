@@ -2,7 +2,6 @@ package com.github.zuihou.authority.controller.core;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.github.zuihou.authority.dto.core.OrgSaveDTO;
-import com.github.zuihou.authority.dto.core.OrgTreeDTO;
 import com.github.zuihou.authority.dto.core.OrgUpdateDTO;
 import com.github.zuihou.authority.entity.core.Org;
 import com.github.zuihou.authority.service.core.OrgService;
@@ -11,8 +10,8 @@ import com.github.zuihou.base.R;
 import com.github.zuihou.base.entity.SuperEntity;
 import com.github.zuihou.database.mybatis.conditions.Wraps;
 import com.github.zuihou.database.mybatis.conditions.query.LbqWrapper;
-import com.github.zuihou.dozer.DozerUtils;
 import com.github.zuihou.log.annotation.SysLog;
+import com.github.zuihou.utils.BeanPlusUtil;
 import com.github.zuihou.utils.BizAssert;
 import com.github.zuihou.utils.TreeUtil;
 import io.swagger.annotations.Api;
@@ -51,8 +50,6 @@ public class OrgController extends BaseController {
 
     @Autowired
     private OrgService orgService;
-    @Autowired
-    private DozerUtils dozer;
 
     /**
      * 分页查询组织
@@ -98,7 +95,7 @@ public class OrgController extends BaseController {
     @PostMapping
     @SysLog("新增组织")
     public R<Org> save(@RequestBody @Validated OrgSaveDTO data) {
-        Org org = this.dozer.map(data, Org.class);
+        Org org = BeanPlusUtil.toBean(data, Org.class);
         if (org.getParentId() == null || org.getParentId() <= 0) {
             org.setParentId(DEF_PARENT_ID);
             org.setTreePath(DEF_ROOT_PATH);
@@ -122,7 +119,7 @@ public class OrgController extends BaseController {
     @PutMapping
     @SysLog("修改组织")
     public R<Org> update(@RequestBody @Validated(SuperEntity.Update.class) OrgUpdateDTO data) {
-        Org org = this.dozer.map(data, Org.class);
+        Org org = BeanPlusUtil.toBean(data, Org.class);
         this.orgService.updateById(org);
         return this.success(org);
     }
@@ -152,12 +149,11 @@ public class OrgController extends BaseController {
     @ApiOperation(value = "查询系统所有的组织树", notes = "查询系统所有的组织树")
     @GetMapping("/tree")
     @SysLog("查询系统所有的组织树")
-    public R<List<OrgTreeDTO>> tree(@RequestParam(value = "name", required = false) String name,
-                                    @RequestParam(value = "status", required = false) Boolean status) {
-        List<Org> list = this.orgService.list(Wraps.<Org>lbQ().like(Org::getName, name)
+    public R<List<Org>> tree(@RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "status", required = false) Boolean status) {
+        List<Org> list = this.orgService.list(Wraps.<Org>lbQ().like(Org::getLabel, name)
                 .eq(Org::getStatus, status).orderByAsc(Org::getSortValue));
-        List<OrgTreeDTO> treeList = this.dozer.mapList(list, OrgTreeDTO.class);
-        return this.success(TreeUtil.build(treeList));
+        return this.success(TreeUtil.buildTree(list));
     }
 
     @GetMapping("/findOrgByIds")

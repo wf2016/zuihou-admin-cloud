@@ -18,7 +18,6 @@ import com.github.zuihou.database.mybatis.conditions.Wraps;
 import com.github.zuihou.database.mybatis.conditions.query.LbqWrapper;
 import com.github.zuihou.log.annotation.SysLog;
 import com.github.zuihou.model.RemoteData;
-import com.github.zuihou.utils.BeanPlusUtil;
 import com.github.zuihou.utils.TreeUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -93,6 +92,15 @@ public class AreaController extends BaseController {
         return success(areaService.getByIdWithCache(id));
     }
 
+
+    @ApiOperation(value = "检测地区编码是否重复", notes = "检测地区编码是否重复")
+    @GetMapping("/check/{code}")
+    @SysLog("检测地区编码是否重复")
+    public R<Boolean> check(@RequestParam(required = false) Long id, @PathVariable String code) {
+        int count = areaService.count(Wraps.<Area>lbQ().eq(Area::getCode, code).ne(Area::getId, id));
+        return success(count > 0);
+    }
+
     /**
      * 新增地区表
      *
@@ -134,6 +142,8 @@ public class AreaController extends BaseController {
     @SysLog("删除地区表")
     public R<Boolean> delete(@RequestParam("ids[]") List<Long> ids) {
         areaService.removeByIdWithCache(ids);
+
+        //TODO 递归删除
         return success(true);
     }
 
@@ -166,7 +176,6 @@ public class AreaController extends BaseController {
      */
     @ApiOperation(value = "查询树形地区", notes = "查询树形地区")
     @GetMapping("/tree")
-    @Deprecated
     @SysLog("查询树形地区")
     public R<List<Area>> tree() {
         TimeInterval timer = DateUtil.timer();
@@ -174,14 +183,10 @@ public class AreaController extends BaseController {
         long find = timer.interval();
 
         timer = DateUtil.timer();
-        List<Area> areas = BeanPlusUtil.toBeanList(list, Area.class);
-        long map = timer.interval();
-
-        timer = DateUtil.timer();
-        List<Area> tree = TreeUtil.buildTree(areas);
+        List<Area> tree = TreeUtil.buildTree(list);
         long build = timer.interval();
 
-        log.info("查询={}, map={}, build={}", find, map, build);
+        log.info("查询={},  build={}", find, build);
         return success(tree);
     }
 }
