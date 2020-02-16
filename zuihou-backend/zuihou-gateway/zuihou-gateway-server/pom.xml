@@ -15,10 +15,23 @@
     <description>网关服务启动模块</description>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.github.zuihou</groupId>
+            <artifactId>zuihou-common</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.github.zuihou</groupId>
             <artifactId>zuihou-jwt-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.github.zuihou</groupId>
+            <artifactId>zuihou-boot</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -40,13 +53,12 @@
         </dependency>
         <dependency>
             <groupId>com.github.zuihou</groupId>
-            <artifactId>zuihou-openfeign-starter</artifactId>
+            <artifactId>zuihou-cloud-starter</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-webmvc</artifactId>
                 </exclusion>
-
             </exclusions>
         </dependency>
 
@@ -116,13 +128,6 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-ui</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.github.xiaoymin</groupId>-->
-        <!--            <artifactId>swagger-bootstrap-ui</artifactId>-->
-        <!--            <scope>compile</scope>-->
-        <!--        </dependency>-->
-
-
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-bean-validators</artifactId>

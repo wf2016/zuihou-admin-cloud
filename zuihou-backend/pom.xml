@@ -22,6 +22,7 @@
         <module>zuihou-jobs</module>
         <module>zuihou-gateway</module>
         <module>zuihou-api</module>
+        <module>zuihou-common</module>
         <!-- 以下两个模块为测试模块 -->
         <module>zuihou-demo</module>
         <module>zuihou-order</module>
@@ -42,7 +43,7 @@
             </dependency>
             <dependency>
                 <groupId>com.github.zuihou</groupId>
-                <artifactId>zuihou-common</artifactId>
+                <artifactId>zuihou-boot</artifactId>
                 <version>${commons.version}</version>
             </dependency>
             <dependency>
@@ -112,13 +113,19 @@
             </dependency>
             <dependency>
                 <groupId>com.github.zuihou</groupId>
-                <artifactId>zuihou-openfeign-starter</artifactId>
+                <artifactId>zuihou-cloud-starter</artifactId>
                 <version>${commons.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.zuihou</groupId>
                 <artifactId>zuihou-zipkin-client-starter</artifactId>
                 <version>${commons.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.zuihou</groupId>
+                <artifactId>zuihou-common</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <!--            <dependency>-->

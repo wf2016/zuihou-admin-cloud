@@ -1,9 +1,9 @@
 package com.github.zuihou.utils;
 
+import cn.hutool.core.util.ArrayUtil;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 
 
 /**
@@ -33,8 +33,7 @@ import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 public class AntiSqlFilter {
 
     private static final String[] KEY_WORDS = {";", "\"", "\'", "/*", "*/", "--", "exec",
-            "select", "update", "delete", "insert",
-            "alter", "drop", "create", "shutdown"};
+            "select", "update", "delete", "insert", "alter", "drop", "create", "shutdown"};
 
     public static Map<String, String[]> getSafeParameterMap(Map<String, String[]> parameterMap) {
         Map<String, String[]> map = new HashMap<>(parameterMap.size());
@@ -46,7 +45,7 @@ public class AntiSqlFilter {
     }
 
     public static String[] getSafeValues(String[] oldValues) {
-        if (ArrayUtils.isNotEmpty(oldValues)) {
+        if (ArrayUtil.isNotEmpty(oldValues)) {
             String[] newValues = new String[oldValues.length];
             for (int i = 0; i < oldValues.length; i++) {
                 newValues[i] = getSafeValue(oldValues[i]);
@@ -70,7 +69,7 @@ public class AntiSqlFilter {
                     lowerCase = sb.toString().toLowerCase();
                     continue;
                 }
-                sb.deleteCharAt(x + 1);
+                sb.delete(x, x + keyWord.length());
                 lowerCase = sb.toString().toLowerCase();
             }
         }
