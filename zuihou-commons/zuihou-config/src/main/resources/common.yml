@@ -50,10 +50,6 @@ spring:
     enabled: ${zuihou.zipkin.enabled}
     sampler:
       probability: 1.0   # 采集率 1.0表示所有请求都采集， 生产线一般不会设置成1.0，影响效率
-  cloud:
-    alibaba:
-      seata:
-        tx-service-group: zuihou_admin_seata_tx_group
   http:
     encoding:
       charset: UTF-8
@@ -99,8 +95,6 @@ ribbon:
   httpclient:
     enabled: false
   okhttp:
-    enabled: true
-  eureka:
     enabled: true
   ReadTimeout: 30000     #
   ConnectTimeout: 30000  # [ribbon超时时间]大于[熔断超时],那么会先走熔断，相当于你配的ribbon超时就不生效了  ribbon和hystrix是同时生效的，哪个值小哪个生效

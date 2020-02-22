@@ -23,7 +23,7 @@ spring:
           - dataId: redis.yml
             refresh: false
           - dataId: mysql.yml
-            refresh: false
+            refresh: true
           - dataId: rabbitmq.yml
             refresh: false
         enabled: true
@@ -32,6 +32,7 @@ spring:
         namespace: ${zuihou.nacos.namespace}
         metadata:
           management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
+
 
 logging:
   file:

@@ -40,6 +40,7 @@ public enum ExceptionCode implements BaseExceptionCode {
     LOAD_RESOURCES_ERROR(-8, "加载资源出错"),
     BASE_VALID_PARAM(-9, "统一验证参数异常"),
     OPERATION_EX(-10, "操作异常"),
+    SERVICE_MAPPER_ERROR(-11, "Mapper类转换异常"),
 
 
     OK(200, "OK"),
@@ -65,6 +66,9 @@ public enum ExceptionCode implements BaseExceptionCode {
     //系统相关 end
 
     REQUIRED_FILE_PARAM_EX(1001, "请求中必须至少包含一个有效文件"),
+
+    DATA_SAVE_ERROR(2000, "新增数据失败"),
+    DATA_UPDATE_ERROR(2001, "修改数据失败"),
     //jwt token 相关 start
 
     JWT_TOKEN_EXPIRED(40001, "会话超时，请重新登录"),
