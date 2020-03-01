@@ -30,8 +30,8 @@ http://doc.tangyh.top/zuihou-admin-cloud
     ps: gitee捐献 或者 二维码打赏（本页最下方）： 45元及以上 备注邮箱，可得开发文档一份（支持后续更新） （比看云的价格便宜哦）
 
 
-## 交流群： 63202894
-![qq群.png](docs/image/qq群.png) <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=489800b9d07d017fa0b5104608a4bf755f1f38276b79f0ac5e6225d0d9897efb"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="zuihou-admin-cloud 交流" title="zuihou-admin-cloud 交流"></a>
+## 交流群： 1011148503（群2）、 63202894（满）
+![qq群.png](docs/image/qq群.png) <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=958f380cb111bcea0cfe35cc5996c47b72ae17a3757807599d1f5ad4fa3c4f6b"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="zuihou-admin-cloud 交流" title="zuihou-admin-cloud 交流"></a>
 
     加群前请先将下方项目点star，支持下群主，谢谢😘
 
@@ -153,7 +153,7 @@ B公司和C公司分别拿着账号， 在 zuihou-ui(租户后台) 上试用， 
 
     集成了阿里的分布式事务中间件：seata，以 **高效** 并且对业务 **0侵入** 的方式，解决 微服务 场景下面临的分布式事务问题。
 
-19. **关联数据自动注入**
+19. **跨表、跨库、跨服务的关联数据自动注入器**
 
     用于解决跨表、跨库、跨服务分页数据的属性或单个对象的属性 回显关联数据之痛, 支持对静态数据属性(数据字典)、动态主键数据进行自动注入。
 
@@ -161,9 +161,6 @@ B公司和C公司分别拿着账号， 在 zuihou-ui(租户后台) 上试用， 
     
     为了解决频繁的服务更新上线，版本回退，快速迭代，公司内部协同开发，本项目采用修改ribbon的负载均衡策略来实现来灰度发布。
      
-21. **跨表、跨库、跨服务的关联数据自动注入器**
-    
-    用于 自动解决分页数据的属性或单个对象的属性 回显关联数据之痛, 支持对静态数据属性(数据字典)、动态主键数据进行自动注入。
 
 
 ## 项目架构图:  架构图.xml -> https://www.draw.io/
@@ -217,7 +214,7 @@ PS: Lombok版本过低会导致枚举类型的参数无法正确获取参数，�
     本项目正在开发阶段，由于码主白天要上班，只有晚上、周末能挤点时间来敲敲代码，所以进度可能比较慢，文档、注释也不齐全。 
     各位大侠就将就着看，但随着时间的推移。文档，注释，启动说明等码主我一定会补全的。   
 
-## 打赏
+## 项目不错，支持一下吧
 ![请作者买个防脱发药水吧.png](docs/image/请作者买瓶防脱发药水吧.png)
     
     ps: gitee捐献 或者 二维码打赏： 45元及以上 备注邮箱，可得开发文档一份（支持后续更新） （比看云的价格便宜哦） 
